@@ -162,9 +162,13 @@ class _ListListExurcion_Insersion_Update_PageState extends State<ListListExurcio
       'title': gallery.titleGallery.toString(),
     });
 
-    if(imageUpload){
-      request.files.add(await http.MultipartFile.fromPath('photo',image.path));
+    try{
+      request.files.add(await http.MultipartFile.fromPath('photo',gallery.photo));
+      print("Image: ${gallery.photo}");
+    }catch(e){
+      print("lol");
     }
+
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       String responseString = await response.stream.bytesToString();
